@@ -75,16 +75,17 @@
                             rules: [{
                                 purpose: "storage",
                                 enforceVendor: !0,
-                                enforcePurpose: !0
+                                enforcePurpose: !0,
+                                vendorExceptions: ["r2b2"]
                             }, {
                                 purpose: "basicAds",
                                 enforceVendor: !0,
-                                enforcePurpose: !0
+                                enforcePurpose: !0,
+                                vendorExceptions: ["r2b2"]
                             }, {
                                 purpose: "measurement",
                                 enforceVendor: !1,
-                                enforcePurpose: !1
-                            },{
+                                enforcePurpose: !1,
                                 vendorExceptions: ["r2b2"]
                             }],
                             cmpApi: "iab"
@@ -102,15 +103,18 @@
                             rules: [{
                                 purpose: "storage",
                                 enforceVendor: !0,
-                                enforcePurpose: !0
+                                enforcePurpose: !0,
+                                vendorExceptions: ["r2b2"]
                             }, {
                                 purpose: "basicAds",
                                 enforceVendor: !0,
-                                enforcePurpose: !0
+                                enforcePurpose: !0,
+                                vendorExceptions: ["r2b2"]
                             }, {
                                 purpose: "measurement",
                                 enforceVendor: !1,
-                                enforcePurpose: !1
+                                enforcePurpose: !1,
+                                vendorExceptions: ["r2b2"]
                             }],
                             cmpApi: "iab"
                         }
