@@ -84,6 +84,8 @@
                                 purpose: "measurement",
                                 enforceVendor: !1,
                                 enforcePurpose: !1
+                            },{
+                                vendorExceptions: ["r2b2"]
                             }],
                             cmpApi: "iab"
                         },
