@@ -6801,6 +6801,7 @@ AdTrack.cfg = {
         }
         ,
         s = {},
+	    _bidsExternal = {},
         o = {},
         a = function(t) {
             var e;
@@ -6851,6 +6852,13 @@ AdTrack.cfg = {
                             var s = AdTrack.Utils.getDGPMKey(t);
                             AdTrack.call(s, "evPbjBidRequest", r, n - AdTrack.startTime)
                         } else
+						    var keyExternal = i+"-"+r+"-"+t.bidId;
+                            if(!_bidsExternal[keyExternal]) {
+                                _bidsExternal[keyExternal] = {
+                                    done: false,
+                                    timeouted: false
+                                }
+                            }
                             e.prebidBidRequest(r, i, n - AdTrack.startTime)
                     }
                     ))
@@ -6871,6 +6879,17 @@ AdTrack.cfg = {
                             e && s[e] ? s[e].timeouted || AdTrack.call(e, "evPbjBid", t, a - AdTrack.startTime, i, n, AdTrack.Utils.time() - o) : r("Prebid", "Cant log Bid, " + e + " is not registered", AdTrack.Log.ERROR)
                         }(n, d, t.cpm, t.currency, c, o)
                     } else {
+                        var keyExternal = i+"-"+n+"-"+t.bidId;
+                        if(!_bidsExternal[keyExternal]) {
+                            _bidsExternal[keyExternal] = {
+                                done: false,
+                                timeouted: false
+                            }
+                        }
+                        _bidsExternal[keyExternal].done = true;
+                        if(_bidsExternal[keyExternal].timeouted) {
+                            return;
+                        }
                         var h = null;
                         t.responseTimestamp && t.requestTimestamp && (h = t.responseTimestamp - t.requestTimestamp),
                         e.prebidBid(n, i, o - AdTrack.startTime, t.cpm, t.currency, h)
@@ -6884,6 +6903,15 @@ AdTrack.cfg = {
                 try {
                     var t = a("evAuctionEnd");
                     !function(t) {
+                        setTimeout(function() {
+                            for (var keyExternal in _bidsExternal) {
+                                if (_bidsExternal.hasOwnProperty(keyExternal)) {
+                                    if (!_bidsExternal[keyExternal].done) {
+                                        _bidsExternal[keyExternal].timeouted = true;
+                                    }
+                                }
+                            }
+                        }, 100);
                         for (var e in s)
                             s.hasOwnProperty(e) && (s[e].done || (s[e].timeouted = !0,
                             AdTrack.call(e, "evPbjTimeout", s[e].adUnit, t - AdTrack.startTime)))
@@ -6966,9 +6994,9 @@ AdTrack.cfg = {
                 o[t] || (o[t] = []),
                 o[t].push(e)
             },
-            getBids: function() {
-                return s
-            }
+			getBids: function (external) {
+				return external ? _bidsExternal : s;
+			}
         }),
         function(t) {
             t.AdTrack.PrebidAdapter && !t.AdTrack.PrebidAdapter.cmdQueue || (t.AdTrack.PrebidAdapter = function(e) {
