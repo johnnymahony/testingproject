@@ -6853,6 +6853,7 @@ AdTrack.cfg = {
                             AdTrack.call(s, "evPbjBidRequest", r, n - AdTrack.startTime)
                         } else
 						    var keyExternal = i+"-"+r+"-"+t.bidId;
+		    console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY", "bid request: "+keyExternal);
                             if(!_bidsExternal[keyExternal]) {
                                 _bidsExternal[keyExternal] = {
                                     done: false,
@@ -6880,6 +6881,7 @@ AdTrack.cfg = {
                         }(n, d, t.cpm, t.currency, c, o)
                     } else {
                         var keyExternal = i+"-"+n+"-"+t.bidId;
+		    console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY", "bid response: "+keyExternal);
                         if(!_bidsExternal[keyExternal]) {
                             _bidsExternal[keyExternal] = {
                                 done: false,
@@ -6900,13 +6902,17 @@ AdTrack.cfg = {
             }
             ,
             evAuctionEnd: h = function() {
+		    console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY", "auction end");
                 try {
                     var t = a("evAuctionEnd");
                     !function(t) {
                         setTimeout(function() {
+		    console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY", "auction end processing");
                             for (var keyExternal in _bidsExternal) {
                                 if (_bidsExternal.hasOwnProperty(keyExternal)) {
                                     if (!_bidsExternal[keyExternal].done) {
+		    console.log("HEEEEEEEEEEEEEEEEEEEEEEEEEEEEEY TIMEOUT!!!!!!!", _bidsExternal[keyExternal]);
+					    
                                         _bidsExternal[keyExternal].timeouted = true;
                                     }
                                 }
