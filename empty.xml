@@ -1,0 +1,21 @@
+<VAST xmlns:xsi="vast.xsd" version="3.0">
+    <Ad>
+        <Wrapper>
+            <AdSystem>AdTrack</AdSystem>
+            <VASTAdTagURI>
+                <![CDATA[ https://trackad.cz/static/vast/empty.xml ]]>
+            </VASTAdTagURI>
+            <Creatives>
+                <Creative>
+                    <Linear>
+                        <VideoClicks>
+                            <ClickTracking>
+                                <![CDATA[ %%CLICK_URL_UNESC%% ]]>
+                            </ClickTracking>
+                        </VideoClicks>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </Wrapper>
+    </Ad>
+</VAST>
